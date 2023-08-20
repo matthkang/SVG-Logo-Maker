@@ -2,16 +2,27 @@
 const inquirer = require('inquirer')
 const fs = require('fs')
 
+// check if text is <= 3
+function confirmAnswerValidator(text) {
+    if (text.length !== 3) {
+        return '3 character limit!';
+    }
+    return true;
+};
+
 // create an array of questions for user input
 const questions = [
-    { message: 'What is the text of the SVG logo? (3 char limit)', type: 'input', name: 'text' },
+    { message: 'What is the text of the SVG logo? (3 char limit)', type: 'input', name: 'text', validate: confirmAnswerValidator },
     { message: 'What is the color of the text? (keyword or hexadecimal number)', type: 'input', name: 'textColor' },
     { message: 'Choose a shape for the logo:', type: 'list', choices: ['circle', 'triangle', 'square'], name: 'shape' },
     { message: 'What is the color of the shape? (keyword or hexadecimal number)', type: 'input', name: 'shapeColor' },
 ];
 
+// svg object to create
+let svg;
+
 // prompt user from list of questions
-// create README.md file based on answers
+// create SVG file based on answers
 inquirer.prompt(questions)
     .then((answers) => {
         if (answers.shape === 'square') {
@@ -22,10 +33,9 @@ inquirer.prompt(questions)
             square.setShape(answers.shape);
             square.setShapeColor(answers.shapeColor);
 
-            const svg = square.renderSvg();
-            createSvg('./examples/square.svg', svg);
+            svg = square.renderSvg();
         }
-        else if (answers.shape === 'circle'){
+        else if (answers.shape === 'circle') {
             const Circle = require('./lib/circle.js');
             const circle = new Circle();
             circle.setText(answers.text);
@@ -33,10 +43,9 @@ inquirer.prompt(questions)
             circle.setShape(answers.shape);
             circle.setShapeColor(answers.shapeColor);
 
-            const svg = circle.renderSvg();
-            createSvg('./examples/circle.svg', svg);
+            svg = circle.renderSvg();
         }
-        else if (answers.shape === 'triangle'){
+        else if (answers.shape === 'triangle') {
             const Triangle = require('./lib/triangle.js');
             const triangle = new Triangle();
             triangle.setText(answers.text);
@@ -44,15 +53,15 @@ inquirer.prompt(questions)
             triangle.setShape(answers.shape);
             triangle.setShapeColor(answers.shapeColor);
 
-            const svg = triangle.renderSvg();
-            createSvg('./examples/triangle.svg', svg);
+            svg = triangle.renderSvg();
         }
+        createSvg('./examples/logo.svg', svg);
     })
 
 // create a function to write README file
 function createSvg(fileName, content) {
     fs.writeFile(fileName, content, (err) =>
-        err ? console.log(err) : console.log('Successfully created SVG logo!')
+        err ? console.log(err) : console.log('Generated logo.svg')
     );
 }
 
