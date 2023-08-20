@@ -36,6 +36,17 @@ inquirer.prompt(questions)
             const svg = circle.renderSvg();
             createSvg('./examples/circle.svg', svg);
         }
+        else if (answers.shape === 'triangle'){
+            const Triangle = require('./lib/triangle.js');
+            const triangle = new Triangle();
+            triangle.setText(answers.text);
+            triangle.setTextColor(answers.textColor);
+            triangle.setShape(answers.shape);
+            triangle.setShapeColor(answers.shapeColor);
+
+            const svg = triangle.renderSvg();
+            createSvg('./examples/triangle.svg', svg);
+        }
     })
 
 // create a function to write README file
