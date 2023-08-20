@@ -4,7 +4,7 @@ const fs = require('fs')
 
 // check if text is <= 3
 function confirmAnswerValidator(text) {
-    if (text.length !== 3) {
+    if (text.length > 3) {
         return '3 character limit!';
     }
     return true;
