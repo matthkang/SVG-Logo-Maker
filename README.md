@@ -13,25 +13,28 @@ Create a logo.svg with custom text and color based on user input
 
 ## Installation
 
-Run to install dependencies:
+To install dependencies:
 ```npm i```
 
 ## Usage
 
-Run to run application:
+To run application:
 ```node index.js```
 
 Sample SVG logo created based on user's responses to questions:
 
 ![Logo](images/logo.png)
 
-Video demonstrating application: [Logo Maker Demo]()
+Video demonstrating application: [Logo Maker Demo](https://drive.google.com/file/d/1XEQIZg5cYea3mG_JfHYZcKFHIqD61jsP/view?usp=sharing)
 
 ---
 
 ## Tests
 
-No tests
+To run tests:
+```npm run test```
+
+4 tests: square.test.js, circle.test.js, triangle.test.js, shapes.test.js
 
 ## Questions
 

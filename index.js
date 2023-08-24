@@ -1,6 +1,9 @@
 // packages needed for application
 const inquirer = require('inquirer')
 const fs = require('fs')
+const Square = require('./lib/square.js');
+const Circle = require('./lib/circle.js');
+const Triangle = require('./lib/triangle.js');
 
 // check if text is <= 3
 function confirmAnswerValidator(text) {
@@ -21,42 +24,6 @@ const questions = [
 // svg object to create
 let svg;
 
-// prompt user from list of questions
-// create SVG file based on answers
-inquirer.prompt(questions)
-    .then((answers) => {
-        if (answers.shape === 'square') {
-            const Square = require('./lib/square.js');
-            const square = new Square();
-            square.setText(answers.text);
-            square.setTextColor(answers.textColor);
-            square.setShape(answers.shape);
-            square.setShapeColor(answers.shapeColor);
-
-            svg = square.renderSvg();
-        }
-        else if (answers.shape === 'circle') {
-            const Circle = require('./lib/circle.js');
-            const circle = new Circle();
-            circle.setText(answers.text);
-            circle.setTextColor(answers.textColor);
-            circle.setShape(answers.shape);
-            circle.setShapeColor(answers.shapeColor);
-
-            svg = circle.renderSvg();
-        }
-        else if (answers.shape === 'triangle') {
-            const Triangle = require('./lib/triangle.js');
-            const triangle = new Triangle();
-            triangle.setText(answers.text);
-            triangle.setTextColor(answers.textColor);
-            triangle.setShape(answers.shape);
-            triangle.setShapeColor(answers.shapeColor);
-
-            svg = triangle.renderSvg();
-        }
-        createSvg('./examples/logo.svg', svg);
-    })
 
 // create a function to write README file
 function createSvg(fileName, content) {
@@ -67,6 +34,23 @@ function createSvg(fileName, content) {
 
 // create a function to initialize app
 function init() {
+    // prompt user from list of questions
+    // create SVG file based on answers
+    inquirer.prompt(questions)
+        .then((answers) => {
+
+            let shape = new Triangle(answers);
+
+            if (answers.shape === 'square') {
+                shape = new Square(answers);
+            }
+            else if (answers.shape === 'circle') {
+                shape = new Circle(answers);
+            }
+
+            createSvg('./examples/logo.svg', shape.renderSvg());
+        })
+
 }
 
 // Function call to initialize app
